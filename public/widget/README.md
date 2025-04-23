@@ -1,72 +1,53 @@
 # Voicello Widget
 
-A floating embeddable video conferencing widget that can be added to any website.
-
-## How to Use
-
-### Basic Integration
-
-Add the embed script to your website by including this code before the closing `</body>` tag:
-
-```html
-<!-- Add the widget script -->
-<script src="https://your-voicello-domain.com/widget/embed.js"></script>
-
-<!-- Initialize with custom options -->
-<script>
-  window.addEventListener('load', function() {
-    VoicelloWidget.init({
-      position: 'bottom-right', // bottom-right, bottom-left, top-right, top-left
-      theme: 'light' // light, dark
-    });
-  });
-</script>
-```
-
-Replace `https://your-voicello-domain.com` with your actual deployed Voicello URL.
-
-### Auto-Initialization with Data Attributes
-
-Alternatively, you can use data attributes for automatic initialization:
-
-```html
-<!-- Add data attributes for auto-initialization -->
-<div data-voicello-widget
-     data-position="bottom-right"
-     data-theme="light"></div>
-
-<!-- Add the widget script -->
-<script src="https://your-voicello-domain.com/widget/embed.js"></script>
-```
-
-## Configuration Options
-
-| Option | Default | Description |
-|--------|---------|-------------|
-| position | bottom-right | Position of the widget button (bottom-right, bottom-left, top-right, top-left) |
-| theme | light | Widget theme (light, dark) |
-| widgetUrl | Current domain + /widget | URL to the widget page |
-
-## Demo
-
-A demo page is available at `/widget/demo.html` on your Voicello deployment. This page demonstrates the widget in action and shows how to embed it on your own site.
+A lightweight, embeddable video conferencing widget powered by LiveKit.
 
 ## Features
 
-- Floating button that can be positioned in any corner of your website
-- Expands to a video conferencing interface when clicked
-- Uses LiveKit for high-quality, scalable video conferencing
-- Easy to integrate into any website with minimal code
-- Customizable appearance with theming options
+- Easy integration with any website
+- Customizable positioning and theme
+- Responsive design
+- Built with React and LiveKit for reliable video conferencing
+
+## Basic Integration
+
+Add this script to your website:
+
+```html
+<script src="https://nimble-sawine-d560b1.netlify.app/widget/embed.js"></script>
+```
+
+And initialize it:
+
+```javascript
+window.addEventListener('load', function() {
+  VoicelloWidget.init({
+    position: 'bottom-right',
+    theme: 'light'
+  });
+});
+```
+
+## Auto-Initialization
+
+You can also initialize the widget using data attributes:
+
+```html
+<div data-voicello-widget data-position="bottom-right" data-theme="light"></div>
+<script src="https://nimble-sawine-d560b1.netlify.app/widget/embed.js"></script>
+```
+
+## Live Demo
+
+Try the widget: [https://nimble-sawine-d560b1.netlify.app/widget/demo.html](https://nimble-sawine-d560b1.netlify.app/widget/demo.html)
 
 ## Development
 
-The widget consists of:
+This widget is part of the Voicello project. For development:
 
-1. A client-side JavaScript file (`/widget/embed.js`) that creates an iframe and handles UI interactions
-2. Next.js pages that render the video conferencing interface
-3. Integration with LiveKit for video conferencing functionality
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Run the development server with `npm run dev`
+4. Access the widget demo at `http://localhost:3000/widget/demo.html`
 
-To modify the widget, edit the files in:
-- `/app/widget/` - The widget React components
-- `/public/widget/` - The embed script and demo page 
+For more details, see the [Embed Guide](./EMBED_GUIDE.md). 

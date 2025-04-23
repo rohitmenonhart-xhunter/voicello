@@ -204,15 +204,25 @@
     // Add animated overlay to container
     container.appendChild(animatedOverlay);
     
-    // Add iframe to load the widget
+    // Create iframe element
     iframe = document.createElement('iframe');
-    iframe.id = 'voicello-widget-iframe';
-    iframe.src = config.widgetUrl;
     iframe.style.border = 'none';
     iframe.style.width = '100%';
     iframe.style.height = '100%';
+    iframe.style.position = 'absolute';
+    iframe.style.top = '0';
+    iframe.style.left = '0';
+    iframe.style.borderRadius = config.size === 'minimized' ? '50%' : '12px';
+    iframe.style.zIndex = '2';
+    iframe.style.transition = 'border-radius 0.3s ease-in-out';
     iframe.style.backgroundColor = 'transparent';
     iframe.style.overflow = 'hidden';
+    
+    // Add permission attributes for camera and microphone
+    iframe.allow = "camera; microphone; display-capture; autoplay; clipboard-write; clipboard-read";
+    
+    // Set the iframe source URL
+    iframe.src = config.widgetUrl;
     
     // Add to container
     container.appendChild(iframe);
