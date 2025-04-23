@@ -1,42 +1,27 @@
-import React from 'react';
-import { useKrispNoiseFilter } from '@livekit/components-react/krisp';
-import { TrackToggle } from '@livekit/components-react';
-import { MediaDeviceMenu } from '@livekit/components-react';
+'use client';
+import * as React from 'react';
+import { MediaDeviceMenu, TrackToggle, useLocalParticipantPermissions } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 
 export function MicrophoneSettings() {
-  const { isNoiseFilterEnabled, setNoiseFilterEnabled, isNoiseFilterPending } =
-    useKrispNoiseFilter();
-
-  React.useEffect(() => {
-    // enable Krisp by default
-    setNoiseFilterEnabled(true);
-  }, []);
+  const permissions = useLocalParticipantPermissions();
+  
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '10px',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}
-    >
-      <section className="lk-button-group">
-        <TrackToggle source={Track.Source.Microphone}>Microphone</TrackToggle>
+    <div className="microphone-settings">
+      <div className="lk-button-group">
+        <TrackToggle
+          source={Track.Source.Microphone}
+          showIcon={false}
+        >
+          {permissions?.canPublish ? 'Enable Microphone' : 'Microphone Disabled'}
+        </TrackToggle>
+      </div>
+      <div className="lk-button-group">
+        <span className="lk-button">Microphone</span>
         <div className="lk-button-group-menu">
-          <MediaDeviceMenu kind="audioinput" />
+          <MediaDeviceMenu kind="audioinput"></MediaDeviceMenu>
         </div>
-      </section>
-
-      <button
-        className="lk-button"
-        onClick={() => setNoiseFilterEnabled(!isNoiseFilterEnabled)}
-        disabled={isNoiseFilterPending}
-        aria-pressed={isNoiseFilterEnabled}
-      >
-        {isNoiseFilterEnabled ? 'Disable' : 'Enable'} Enhanced Noise Cancellation
-      </button>
+      </div>
     </div>
   );
 }

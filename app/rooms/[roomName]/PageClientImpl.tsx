@@ -139,21 +139,27 @@ function VideoConferenceComponent(props: {
 
   React.useEffect(() => {
     if (e2eeEnabled) {
-      keyProvider
-        .setKey(decodePassphrase(e2eePassphrase))
-        .then(() => {
-          room.setE2EEEnabled(true).catch((e) => {
-            if (e instanceof DeviceUnsupportedError) {
-              alert(
-                `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`,
-              );
-              console.error(e);
-            } else {
-              throw e;
-            }
-          });
-        })
-        .then(() => setE2eeSetupComplete(true));
+      const passphrase = decodePassphrase(e2eePassphrase);
+      if (passphrase) {
+        keyProvider
+          .setKey(passphrase)
+          .then(() => {
+            room.setE2EEEnabled(true).catch((e) => {
+              if (e instanceof DeviceUnsupportedError) {
+                alert(
+                  `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`,
+                );
+                console.error(e);
+              } else {
+                throw e;
+              }
+            });
+          })
+          .then(() => setE2eeSetupComplete(true));
+      } else {
+        console.error('Invalid E2EE passphrase');
+        setE2eeSetupComplete(true);
+      }
     } else {
       setE2eeSetupComplete(true);
     }

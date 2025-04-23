@@ -1,23 +1,42 @@
 .settingsCloseButton {
-  position: absolute;
-  right: var(--lk-grid-gap);
-  bottom: var(--lk-grid-gap);
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #0090ff;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.settingsCloseButton:hover {
+  background-color: #007ad9;
 }
 
 .tabs {
-  position: relative;
   display: flex;
-  align-content: space-between;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
 }
 
-.tabs > .tab {
-  padding: 0.5rem;
-  border-radius: 0;
-  padding-bottom: 0.5rem;
-  border-bottom: 3px solid;
-  border-color: var(--bg5);
+.tab {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
 }
 
-.tabs > .tab[aria-pressed='true'] {
-  border-color: var(--lk-accent-bg);
+.tab:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tab[aria-pressed="true"] {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
 }

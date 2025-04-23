@@ -2,8 +2,11 @@
 const nextConfig = {
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
-  // Completely disable the dev indicator
-  devIndicators: false,
+  // Configure dev indicators properly
+  devIndicators: {
+    buildActivity: false,
+    buildActivityPosition: 'bottom-right',
+  },
   images: {
     formats: ['image/webp'],
     remotePatterns: [
@@ -26,6 +29,14 @@ const nextConfig = {
       enforce: 'pre',
       use: ['source-map-loader'],
     });
+
+    // Add polyfills for crypto module
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      crypto: require.resolve('crypto-browserify'),
+      stream: require.resolve('stream-browserify'),
+      util: require.resolve('util/'),
+    };
 
     return config;
   },

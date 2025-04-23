@@ -23,12 +23,12 @@ export async function GET(req: NextRequest) {
 
     const egressClient = new EgressClient(hostURL.origin, LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
     const activeEgresses = (await egressClient.listEgress({ roomName })).filter(
-      (info) => info.status < 2,
+      (info) => info.status !== undefined && info.status < 2 && info.egressId !== undefined,
     );
     if (activeEgresses.length === 0) {
       return new NextResponse('No active recording found', { status: 404 });
     }
-    await Promise.all(activeEgresses.map((info) => egressClient.stopEgress(info.egressId)));
+    await Promise.all(activeEgresses.map((info) => egressClient.stopEgress(info.egressId!)));
 
     return new NextResponse(null, { status: 200 });
   } catch (error) {

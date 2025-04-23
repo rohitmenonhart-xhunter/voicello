@@ -1,13 +1,9 @@
 import { AccessToken } from 'livekit-server-sdk';
-import { env } from '@/env';
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
  * API route for getting connection details
- * Optimized for Vercel's serverless environment
  */
-export const runtime = 'edge'; // Optimize for Edge runtime on Vercel
-
 export async function GET(request: NextRequest) {
   try {
     // Get query parameters
@@ -23,25 +19,23 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Create a new access token
-    const apiKey = env.LIVEKIT_API_KEY;
-    const apiSecret = env.LIVEKIT_API_SECRET;
-    const serverUrl = env.LIVEKIT_URL;
+    // Get environment variables
+    const { LIVEKIT_API_KEY, LIVEKIT_API_SECRET, LIVEKIT_URL } = process.env;
 
-    // Validate connection details
-    if (!apiKey || !apiSecret || !serverUrl) {
+    // Verify configuration
+    if (!LIVEKIT_API_KEY || !LIVEKIT_API_SECRET || !LIVEKIT_URL) {
       return NextResponse.json(
-        { error: 'LiveKit connection details not properly configured' },
+        { error: 'LiveKit configuration is missing' },
         { status: 500 }
       );
     }
 
-    // Create token with identity and metadata
-    const at = new AccessToken(apiKey, apiSecret, {
+    // Create token
+    const at = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET, {
       identity: participantName,
     });
 
-    // Grant permissions to join the room
+    // Grant permissions
     at.addGrant({
       roomJoin: true,
       room: roomName,
@@ -49,12 +43,12 @@ export async function GET(request: NextRequest) {
       canSubscribe: true,
     });
 
-    // Generate the token
+    // Generate token
     const token = at.toJwt();
 
-    // Return the connection details
+    // Return connection details
     return NextResponse.json({
-      serverUrl,
+      serverUrl: LIVEKIT_URL,
       participantToken: token,
     });
   } catch (error) {

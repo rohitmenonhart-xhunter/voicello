@@ -15,14 +15,21 @@
     "vercel-build": "pnpm install --no-frozen-lockfile && next build"
   },
   "dependencies": {
-    "@livekit/components-react": "^1.5.1",
+    "@datadog/browser-logs": "^5.23.3",
+    "@livekit/components-react": "^2.9.2",
     "@livekit/components-styles": "^1.0.7",
-    "livekit-client": "^1.15.5",
+    "@livekit/krisp-noise-filter": "^0.2.16",
+    "@livekit/track-processors": "^0.5.4",
+    "crypto-browserify": "^3.12.0",
+    "livekit-client": "^2.11.2",
     "livekit-server-sdk": "^1.2.7",
     "next": "^14.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hot-toast": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "stream-browserify": "^3.0.0",
+    "tinykeys": "^3.0.0",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "@types/node": "^20.9.4",
