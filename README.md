@@ -52,9 +52,20 @@ This application is optimized for [Vercel](https://vercel.com) deployment:
    - `LIVEKIT_API_SECRET` - Your LiveKit API secret
    - `LIVEKIT_URL` - Your LiveKit server URL
    - `NEXT_PUBLIC_BASE_URL` - Your Vercel deployment URL (e.g., https://your-project-name.vercel.app)
-4. Deploy your project.
+4. **Important**: In the Build & Development Settings section of your Vercel project:
+   - Override the Install Command with: `pnpm install --no-frozen-lockfile`
+   - This prevents errors due to outdated lock files
+5. Deploy your project.
 
 Vercel will automatically detect the Next.js configuration and deploy your application with all the optimizations enabled.
+
+### Troubleshooting Deployment Issues
+
+If you encounter the error `ERR_PNPM_OUTDATED_LOCKFILE`, it means your pnpm-lock.yaml is out of sync with package.json. This project is configured to handle this automatically, but if you still face issues:
+
+1. Locally run `pnpm install --no-frozen-lockfile` to update the lock file
+2. Commit and push the updated lock file
+3. Re-deploy on Vercel
 
 ### Optimizations for Vercel:
 - Uses `output: 'standalone'` for smaller, more efficient deployments
