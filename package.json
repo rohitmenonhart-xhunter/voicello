@@ -12,8 +12,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "vercel-build": "pnpm install --no-frozen-lockfile && next build",
-    "postinstall": "pnpm install --no-frozen-lockfile"
+    "vercel-build": "pnpm install --no-frozen-lockfile && next build"
   },
   "dependencies": {
     "@livekit/components-react": "^1.5.1",
