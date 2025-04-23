@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "pnpm install --no-frozen-lockfile && next build",
+  "buildCommand": "pnpm install --no-frozen-lockfile && pnpm add -D source-map-loader && next build",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "regions": ["iad1"],
   "headers": [

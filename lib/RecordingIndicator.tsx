@@ -1,40 +1,41 @@
-import { useIsRecording } from '@livekit/components-react';
+'use client';
+
 import * as React from 'react';
-import toast from 'react-hot-toast';
+import { useIsRecording } from '@livekit/components-react';
+import styles from '../styles/RecordingIndicator.module.css';
 
 export function RecordingIndicator() {
+  // Check if recording feature is enabled
+  const recordingEndpoint = process.env.NEXT_PUBLIC_LK_RECORD_ENDPOINT;
   const isRecording = useIsRecording();
-  const [wasRecording, setWasRecording] = React.useState(false);
+  const [showIndicator, setShowIndicator] = React.useState(false);
+  const [wasRecording, setWasRecording] = React.useState(isRecording);
 
   React.useEffect(() => {
     if (isRecording !== wasRecording) {
       setWasRecording(isRecording);
       if (isRecording) {
-        toast('This meeting is being recorded', {
-          duration: 3000,
-          icon: '🎥',
-          position: 'top-center',
-          className: 'lk-button',
-          style: {
-            backgroundColor: 'var(--lk-danger3)',
-            color: 'var(--lk-fg)',
-          },
-        });
+        setShowIndicator(true);
+      } else {
+        // delay hiding the indicator to show the "stopped" state
+        setTimeout(() => {
+          setShowIndicator(false);
+        }, 2000);
       }
     }
-  }, [isRecording]);
+  }, [isRecording, wasRecording]);
+  
+  // If recording is disabled, don't render anything
+  if (!recordingEndpoint) {
+    return null;
+  }
 
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        width: '100%',
-        height: '100%',
-        boxShadow: isRecording ? 'var(--lk-danger3) 0px 0px 0px 3px inset' : 'none',
-        pointerEvents: 'none',
-      }}
-    ></div>
-  );
+  return showIndicator ? (
+    <div className={styles.recordingIndicator}>
+      <div className={`${styles.dot} ${isRecording ? styles.live : styles.stopped}`} />
+      <span className={styles.text}>
+        {isRecording ? 'Recording' : 'Recording stopped'}
+      </span>
+    </div>
+  ) : null;
 }

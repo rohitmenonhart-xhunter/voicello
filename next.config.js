@@ -18,9 +18,12 @@ const nextConfig = {
   },
   // Optimize for Vercel deployment
   output: 'standalone',
-  // Optimize for serverless environment
+  // Ensure API routes are properly handled in production
   experimental: {
     serverComponentsExternalPackages: ['sharp'],
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) => {
     // Important: return the modified config
